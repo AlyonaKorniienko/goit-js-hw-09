@@ -50,7 +50,26 @@ const refs = {
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
   button: document.querySelector('button[data-start]'),
+  body: document.querySelector('body'),
+  timer: document.querySelector('.timer'),
+  field: document.querySelector('.field'),
+  // field: document.querySelectorAll('.field'),
+  value: document.querySelector('.value'),
+  label: document.querySelector('.label'),
 };
+
+// const field = document.getElementsByClassName('field');
+// console.log(field);
+
+function timerStyle() {
+  refs.body.style.backgroundColor = 'rgba(196, 196, 196, 0.8)';
+  refs.timer.classList.add('timer_new');
+  // refs.field.classList.add('field_new');
+  // field.classList.add(field_new);
+  // refs.value.classList.add('value_new');
+  // refs.label.classList.add('label_new');
+}
+timerStyle();
 
 const options = {
   enableTime: true,
@@ -61,13 +80,12 @@ const options = {
     console.log(selectedDates[0]);
     if (selectedDates[0] > Date.now()) {
       refs.button.disabled = false;
-      Notiflix.Notify.success('To start timer press button "START"');
-      refs.button.addEventListener('click', onTimerStart());
+      Notiflix.Notify.success('Date is OK"');
+      onTimerStart();
     } else {
       Notiflix.Notify.failure('Please choose a date in the future');
       refs.button.disabled = true;
-      refs.button.addEventListener('click', markupUpdate(obj));
-      console.log(obj.days);
+      // console.log(obj.days);
     }
 
     function onTimerStart() {
@@ -75,8 +93,9 @@ const options = {
         timerValue = selectedDates[0] - Date.now();
         convertMs(timerValue);
         console.log(convertMs(timerValue));
-        console.log(typeof convertMs(timerValue));
-
+        // console.log(typeof convertMs(timerValue));
+        markupUpdate(obj);
+        refs.button.disabled = true;
         onTimerStop();
       }, 1000);
     }
@@ -84,7 +103,8 @@ const options = {
 };
 
 let timerValue;
-let obj = convertMs(timerValue);
+let obj = {};
+convertMs(timerValue);
 const calendar = flatpickr('#datetime-picker', options);
 refs.button.setAttribute('disabled', true);
 
@@ -100,30 +120,22 @@ function convertMs(ms) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  const days = Math.floor(ms / day);
-  const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
-
-  return { days, hours, minutes, seconds };
+  const days = addLeadingZero(Math.floor(ms / day));
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+  const seconds = addLeadingZero(
+    Math.floor((((ms % day) % hour) % minute) / second)
+  );
+  return (obj = { days, hours, minutes, seconds });
 }
 
-function markupUpdate(obj) {
-  console.log(typeof obj);
-  console.log(Object.values(obj));
+function markupUpdate(o) {
   refs.days.textContent = `${obj.days}`;
   refs.hours.textContent = `${obj.hours}`;
   refs.minutes.textContent = `${obj.minutes}`;
   refs.seconds.textContent = `${obj.seconds}`;
 }
 
-//   const day = document.querySelector('span[data-days]');
-//   const hour = document.querySelector('span[data-hours]');
-//   const minute = document.querySelector('span[data-minutes]');
-//   const second = document.querySelector('span[data-seconds]');
-
-// console.log(convertMs(1641350211)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
-
-// addLeadingZero(value);
+function addLeadingZero(value) {
+  return String(value).padStart(2, '0');
+}
