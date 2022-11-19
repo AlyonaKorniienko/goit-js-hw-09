@@ -22,13 +22,15 @@ function createPromise(position, delay) {
     setTimeout(() => {
       if (shouldResolve) {
         resolve('Succsess');
-        console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
-        Notiflix.Notify.success(`Fulfilled promise ${position} in ${delay}ms`);
+        console.log(`✅ Fulfilled promise ${position + 1} in ${delay}ms`);
+        Notiflix.Notify.success(
+          `Fulfilled promise ${position + 1} in ${delay}ms`
+        );
       } else {
         reject('Error');
-        console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+        console.log(`❌ Rejected promise ${position + 1} in ${delay}ms`);
         Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
+          `❌ Rejected promise ${position + 1} in ${delay}ms`
         );
       }
     }, delay);
