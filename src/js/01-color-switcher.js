@@ -22,25 +22,43 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
+// const startBtn = document.querySelector('[data-start]');
+// const stopBtn = document.querySelector('[data-stop]');
+// const body = document.querySelector('body');
+
+// // onStartClick;
+// startBtn.addEventListener('click', onStartClick);
+
+// function onStartClick(evt) {
+//   const timerId = setInterval(() => {
+//     body.style.backgroundColor = getRandomHexColor();
+//   }, 1000);
+//   startBtn.disabled = true;
+//   console.log(startBtn);
+// }
+
+// // onStopClick;
+// stopBtn.addEventListener('click', e => {
+//   clearInterval(timerId);
+//   startBtn.disabled = false;
+// });
+
+// =======
+
 const startBtn = document.querySelector('[data-start]');
 const stopBtn = document.querySelector('[data-stop]');
-// console.log(startBtn);
 const body = document.querySelector('body');
-// console.log(body);
+let timerId = null;
 
-// onStartClick;
-startBtn.addEventListener('click', onStartClick);
-
-function onStartClick(evt) {
+startBtn.addEventListener('click', () => {
   timerId = setInterval(() => {
     body.style.backgroundColor = getRandomHexColor();
   }, 1000);
   startBtn.disabled = true;
   console.log(startBtn);
-}
+});
 
-// onStopClick;
-stopBtn.addEventListener('click', e => {
+stopBtn.addEventListener('click', () => {
   clearInterval(timerId);
   startBtn.disabled = false;
 });
