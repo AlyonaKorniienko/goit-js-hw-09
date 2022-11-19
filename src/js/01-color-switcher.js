@@ -29,12 +29,15 @@ const body = document.querySelector('body');
 // console.log(body);
 
 // onStartClick;
-startBtn.addEventListener('click', evt => {
+startBtn.addEventListener('click', onStartClick);
+
+function onStartClick(evt) {
   timerId = setInterval(() => {
     body.style.backgroundColor = getRandomHexColor();
   }, 1000);
   startBtn.disabled = true;
-});
+  console.log(startBtn);
+}
 
 // onStopClick;
 stopBtn.addEventListener('click', e => {
