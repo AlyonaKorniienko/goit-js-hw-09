@@ -95,7 +95,7 @@ const options = {
         console.log(convertMs(timerValue));
         // console.log(typeof convertMs(timerValue));
         markupUpdate(obj);
-        refs.button.disabled = true;
+        // refs.button.disabled = true;
         onTimerStop();
       }, 1000);
     }
